@@ -1,12 +1,12 @@
 package main
 
 import (
+	"github.com/moneway-challenge/services/transaction/db"
 	"log"
-	"moneway.go/moneway-challenge/services/transaction/db"
 )
 
 func main() {
-	err := db.connect()
+	err := db.InitDb()
 	if   err != nil {
 		log.Fatalln(err)
 	}

@@ -3,7 +3,6 @@ package db
 import (
 	"github.com/gocql/gocql"
 	"github.com/scylladb/gocqlx"
-	"log"
 	"time"
 )
 
@@ -27,7 +26,7 @@ func connect() (gocqlx.Session, error) {
 	cluster.Consistency = gocql.Quorum
 	session, err := gocqlx.WrapSession(cluster.CreateSession())
 	if err != nil {
-		log.Fatal(err)
+		return session, err
 	}
 	return session, nil
 }

@@ -6,17 +6,17 @@ import (
 	"time"
 )
 
-func InitDb() error {
+func InitDb() (gocqlx.Session, error) {
 	session, err := connect()
 	if err != nil {
-		return err
+		return session, err
 	}
 
 	err = CreateTable(session, "accounts")
 	if err != nil {
-		return err
+		return session, err
 	}
-	return nil
+	return session, nil
 }
 
 func connect() (gocqlx.Session, error) {

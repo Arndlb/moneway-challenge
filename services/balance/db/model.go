@@ -8,8 +8,9 @@ import (
 	"log"
 )
 
+// Schema of the account table
 var accountMetadata = table.Metadata{
-	Name: "accounts",
+	Name:    "accounts",
 	Columns: []string{"account_id", "first_name", "last_name", "amount", "currency"},
 	PartKey: []string{"account_id"},
 	SortKey: []string{"last_name"},
@@ -18,11 +19,11 @@ var accountMetadata = table.Metadata{
 var accountTable = table.New(accountMetadata)
 
 type Account struct {
-	AccountID gocql.UUID  `db:"account_id"`
-	FirstName string `db:"first_name"`
-	LastName  string `db:"last_name"`
-	Amount    int64  `db:"amount"`
-	Currency  string `db:"currency"`
+	AccountID gocql.UUID `db:"account_id"`
+	FirstName string     `db:"first_name"`
+	LastName  string     `db:"last_name"`
+	Amount    int64      `db:"amount"`
+	Currency  string     `db:"currency"`
 }
 
 // Create the table account if not exist
@@ -60,6 +61,7 @@ func CreateAccount(session gocqlx.Session, lastName string, firstName string, am
 	}
 }
 
+// Return the balance of an account in int64
 func GetBalance(session gocqlx.Session, accountID gocql.UUID) (int64, error) {
 	var account []Account
 	q := session.Query(accountTable.Select()).BindMap(qb.M{"account_id": accountID})
@@ -69,6 +71,7 @@ func GetBalance(session gocqlx.Session, accountID gocql.UUID) (int64, error) {
 	return account[0].Amount, nil
 }
 
+// Update the balance of an account with an new amount
 func UpdateBalance(session gocqlx.Session, accountID gocql.UUID, amount int64) error {
 	account := Account{
 		AccountID: accountID,

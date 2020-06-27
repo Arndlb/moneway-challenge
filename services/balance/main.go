@@ -1,18 +1,21 @@
 package main
 
 import (
-	"github.com/moneway-challenge/services/balance/db"
-	"github.com/moneway-challenge/services/balance/proto"
+	"github.com/Arndlb/moneway-challenge/services/balance/db"
+	"github.com/Arndlb/moneway-challenge/services/balance/proto"
 	"log"
 )
 
 func main() {
+	// Initialize Database and get gocql session
 	session, err := db.InitDb()
 	if err != nil {
 		log.Fatalln(err)
 	}
-	defer session.Close();
+	// CLose database session
+	defer session.Close()
 
+	// Initialize grpc server on port 8080
 	err = proto.InitServer(session)
 	if err != nil {
 		log.Fatalln(err)

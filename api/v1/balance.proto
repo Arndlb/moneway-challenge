@@ -1,34 +1,57 @@
 syntax = "proto3";
 package v1;
 
+// Message for get the balance
+// Params
+// - account_id : Id of the account
 message GetBalanceRequest {
     string account_id = 1;
 }
 
+// Message to send the balance of an account
+// Params
+// - balance : balance of the account
 message GetBalanceResponse {
     int64 balance = 1;
 }
 
+// Message for credit the balance
+// Params
+// - account_id : Id of the account
+// - amount : Amount to add in the database
 message UpdateBalanceCreditRequest {
     string account_id = 1;
     int64 amount = 2;
 }
 
+// Message to send the new balance after credit update
+// Params
+// - balance : New balance of the account
 message UpdateBalanceCreditResponse {
     int64 balance = 1;
 }
 
+// Message for debit the balance
+// Params
+// - account_id : Id of the account
+// - amount : Amount to subtract in the database
 message UpdateBalanceDebitRequest {
     string account_id = 1;
     int64 amount = 2;
 }
 
+// Message to send the new balance after debit update
+// Params
+// - balance : New balance of the account
 message UpdateBalanceDebitResponse {
     int64 balance = 1;
 }
 
 service BalanceService {
+    // Service to get the balance of an account
     rpc GetBalance(GetBalanceRequest) returns(GetBalanceResponse);
+    // Service to credit the balance of an account
     rpc UpdateBalanceCredit(UpdateBalanceCreditRequest) returns(UpdateBalanceCreditResponse);
+    // Service to debit the balance of a transaction
     rpc UpdateBalanceDebit(UpdateBalanceDebitRequest) returns(UpdateBalanceDebitResponse);
 }

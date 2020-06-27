@@ -1,14 +1,28 @@
 syntax = "proto3";
 package v1;
 
+// Message to get a transaction by id
+// Params
+// - transaction_id : Id of the transaction
 message GetTransactionRequest {
-    string account_id = 1;
+    string transaction_id = 1;
 }
 
+// Message to get a transaction by id
+// Params
+// - transaction : Details of the transaction
 message GetTransactionResponse {
     string transaction = 1;
 }
 
+// Message to create a transaction
+// Params
+// - sender_id : Id of the account's sender
+// - receiver_id : Id of the receiver's id
+// - description : Description of the transaction
+// - amount : Amount of the transaction
+// -  currency : Currency of the transaction
+// - Notes : Additional notes
 message CreateTransactionRequest {
     string sender_id = 1;
     string receiver_id = 2;
@@ -18,22 +32,36 @@ message CreateTransactionRequest {
     string notes = 6;
 }
 
+// Message to send new transaction id
+// Params
+// - id : Id of the transaction created
 message CreateTransactionResponse {
     string id = 1;
 }
 
+// Message to update a transaction
+// Params
+// - id : Id of the transaction
+// - description : New description of the transaction
+// - notes : New notes of the transaction
 message UpdateTransactionRequest {
     string id = 1;
     string description = 2;
     string notes = 3;
 }
 
+// Message to get the id of the updated transaction
+// Params
+// - id : Id of the updated transaction
 message UpdateTransactionResponse {
     string id = 1;
 }
 
 service TransactionService {
+    // Service to get a specific transaction by id
     rpc GetTransactions(GetTransactionRequest) returns(GetTransactionResponse);
+    // Service to create a new transaction
     rpc CreateTransaction(CreateTransactionRequest) returns(CreateTransactionResponse);
+    // Service to update a existing transaction
     rpc UpdateTransaction(UpdateTransactionRequest) returns(UpdateTransactionResponse);
 }

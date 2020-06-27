@@ -17,7 +17,7 @@ func InitServer(session gocqlx.Session) error {
 	}
 	fmt.Printf("Server is listening on %v ...", address)
 
-	var server = NewBalanceServiceServer()
+	var server = NewBalanceServiceServer(session)
 	s := grpc.NewServer()
 	v1.RegisterBalanceServiceServer(s, server)
 

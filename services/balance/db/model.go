@@ -38,6 +38,8 @@ func CreateTable(session gocqlx.Session, name string) error {
 	if err != nil {
 		return err
 	}
+	// Create an admin account for testing
+	CreateAccount(session, "admin", "admin", 0, "euro")
 	return nil
 }
 

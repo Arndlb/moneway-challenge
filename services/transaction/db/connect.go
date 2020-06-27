@@ -7,20 +7,17 @@ import (
 	"time"
 )
 
-func InitDb() error {
+func InitDb() (gocqlx.Session, error) {
 	session, err := connect()
 	if err != nil {
-		return err
+		return session, err
 	}
 
 	err = CreateTable(session, "transaction")
 	if err != nil {
-		return err
+		return session, err
 	}
-	id1, _ := gocql.ParseUUID("a7bea45b-e79e-4d4c-8df8-9c21afeace37")
-	_ = UpdateTransaction(session, id1, "ncvrjfjvfnv", "dededededede")
-
-	return nil
+	return session, nil
 }
 
 func connect() (gocqlx.Session, error) {

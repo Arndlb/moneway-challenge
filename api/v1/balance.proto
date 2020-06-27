@@ -7,20 +7,28 @@ message GetBalanceRequest {
 
 message GetBalanceResponse {
     int64 balance = 1;
-    string currency = 2;
 }
 
-message UpdateBalanceRequest {
+message UpdateBalanceCreditRequest {
     string account_id = 1;
     int64 amount = 2;
 }
 
-message UpdateBalanceResponse {
+message UpdateBalanceCreditResponse {
     int64 balance = 1;
-    string currency = 2;
+}
+
+message UpdateBalanceDebitRequest {
+    string account_id = 1;
+    int64 amount = 2;
+}
+
+message UpdateBalanceDebitResponse {
+    int64 balance = 1;
 }
 
 service BalanceService {
     rpc GetBalance(GetBalanceRequest) returns(GetBalanceResponse);
-    rpc UpdateBalance(UpdateBalanceRequest) returns(UpdateBalanceResponse);
+    rpc UpdateBalanceCredit(UpdateBalanceCreditRequest) returns(UpdateBalanceCreditResponse);
+    rpc UpdateBalanceDebit(UpdateBalanceDebitRequest) returns(UpdateBalanceDebitResponse);
 }
